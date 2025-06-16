@@ -8,6 +8,7 @@
 2. [힙 (Heap)](#힙-heap)
 3. [그래프 (Graph)](#그래프-graph)
 4. [해시 테이블 (Hash Table)](#해시-테이블-hash-table)
+5. [🔥 고급 자료구조 및 알고리즘 (Advanced)](#고급-자료구조-및-알고리즘-advanced)
 
 ---
 
@@ -27,19 +28,28 @@
   - `threeWayJoin()`: 3개의 서브트리를 하나로 결합
 - **핵심 개념**: 왼쪽 자식 < 부모 < 오른쪽 자식 순서 유지
 
-### AVL 트리 (AVL Tree)
+### 📍 **Red-Black 트리 (Red-Black Tree)** ⭐⭐⭐
 
-- **파일**: `avl_tree.c`
+- **파일**: `RedBlack_tree.c`
 - **구현 기능**:
-  - `avlAdd()`: 삽입 후 자동 균형 조정
-  - `height()`: 노드의 높이 계산
-  - `rotateLL()`: Left-Left 케이스 회전
-  - `rotateRR()`: Right-Right 케이스 회전
-  - `rotateLR()`: Left-Right 케이스 회전 (이중 회전)
-  - `rotateRL()`: Right-Left 케이스 회전 (이중 회전)
-  - `avlSearch()`: 균형 트리에서의 효율적 탐색
-  - `inorderTraveling()`: 중위 순회 출력
-- **핵심 개념**: 모든 노드에서 좌우 서브트리 높이 차이 ≤ 1, 자동 리밸런싱
+  - `createNode()`: 새 노드 생성 (기본 색상: RED)
+  - `insert()`: BST 방식 삽입 후 Red-Black 속성 복구
+  - `fixInsert()`: **핵심 함수** - 삽입 후 균형 조정
+    - **Case 1**: 삼촌이 빨간색 → 색상 변경으로 해결
+    - **Case 2**: z가 삼각형 구조 → 회전으로 Case 3으로 변환
+    - **Case 3**: z가 직선 구조 → 회전 + 색상 변경으로 해결
+  - 회전 연산:
+    - `rotateLeft()`: 좌회전 (Right-Heavy 상황 해결)
+    - `rotateRight()`: 우회전 (Left-Heavy 상황 해결)
+  - `verifyProperties()`: Red-Black 트리 속성 검증
+    - 루트는 검은색
+    - 빨간 노드의 자식은 검은색
+    - 모든 경로의 검은 노드 수 동일
+  - `printTree()`: 레벨별 트리 구조 시각화 (색상 포함)
+- **🔥 핵심 개념**:
+  - **자동 균형 조정**: 최악의 경우에도 O(log n) 보장
+  - **색상 기반 균형**: 빨간색/검은색으로 높이 균형 유지
+  - **실제 사용**: C++ STL map, Java TreeMap의 내부 구현
 
 ### B-트리 (B-Tree)
 
@@ -115,6 +125,27 @@
     - `isEmpty()`, `isFull()`: 큐 상태 확인
 - **특징**: 큐 구조, 레벨별 탐색, 최단 경로 탐색
 
+### 📍 **다익스트라 알고리즘 (Dijkstra's Algorithm)** ⭐⭐⭐
+
+- **파일**: `Dijkstra_graph.c`
+- **구현 기능**:
+  - `dijkstra()`: **핵심 알고리즘** - 시작 정점에서 모든 정점까지의 최단 경로 계산
+    - **그리디 방식**: 매 단계마다 최소 거리 정점 선택
+    - **거리 완화**: 새로운 경로가 더 짧으면 거리 갱신
+    - **경로 추적**: predecessor 배열로 실제 경로 저장
+  - `choose_vertex()`: 미방문 정점 중 최소 거리 정점 찾기
+  - `print_path()`: 재귀적으로 최단 경로 출력
+  - `create_sample_graph()`: 테스트용 가중치 그래프 생성
+  - 그래프 관리:
+    - `init_graph()`: 인접 행렬 초기화 (INF로 설정)
+    - `insert_edge()`: 무방향 가중치 간선 추가
+    - `print_graph()`: 인접 행렬 시각화
+  - **단계별 시각화**: 알고리즘 수행 과정을 테이블로 출력
+- **🔥 핵심 개념**:
+  - **최단 경로 문제**: 음이 아닌 가중치에서 최적해 보장
+  - **시간복잡도**: O(V²) - 인접 행렬 사용
+  - **실제 사용**: GPS 네비게이션, 네트워크 라우팅, 게임 AI
+
 ### 최소 신장 트리 (MST)
 
 - **파일**: `prim_algorithm.c`
@@ -170,26 +201,82 @@ int hashFunction(char *key) {
 
 ---
 
+## 🔥 고급 자료구조 및 알고리즘 (Advanced)
+
+### 📍 **Red-Black 트리 (Red-Black Tree)** ⭐⭐⭐
+
+- **파일**: `RedBlack_tree.c`
+- **구현 기능**:
+  - `createNode()`: 새 노드 생성 (기본 색상: RED)
+  - `insert()`: BST 방식 삽입 후 Red-Black 속성 복구
+  - `fixInsert()`: **핵심 함수** - 삽입 후 균형 조정
+    - **Case 1**: 삼촌이 빨간색 → 색상 변경으로 해결
+    - **Case 2**: z가 삼각형 구조 → 회전으로 Case 3으로 변환
+    - **Case 3**: z가 직선 구조 → 회전 + 색상 변경으로 해결
+  - 회전 연산:
+    - `rotateLeft()`: 좌회전 (Right-Heavy 상황 해결)
+    - `rotateRight()`: 우회전 (Left-Heavy 상황 해결)
+  - `verifyProperties()`: Red-Black 트리 속성 검증
+    - 루트는 검은색
+    - 빨간 노드의 자식은 검은색
+    - 모든 경로의 검은 노드 수 동일
+  - `printTree()`: 레벨별 트리 구조 시각화 (색상 포함)
+- **🔥 핵심 개념**:
+  - **자동 균형 조정**: 최악의 경우에도 O(log n) 보장
+  - **색상 기반 균형**: 빨간색/검은색으로 높이 균형 유지
+  - **실제 사용**: C++ STL map, Java TreeMap의 내부 구현
+
+### 📍 **다익스트라 알고리즘 (Dijkstra's Algorithm)** ⭐⭐⭐
+
+- **파일**: `Dijkstra_graph.c`
+- **구현 기능**:
+  - `dijkstra()`: **핵심 알고리즘** - 시작 정점에서 모든 정점까지의 최단 경로 계산
+    - **그리디 방식**: 매 단계마다 최소 거리 정점 선택
+    - **거리 완화**: 새로운 경로가 더 짧으면 거리 갱신
+    - **경로 추적**: predecessor 배열로 실제 경로 저장
+  - `choose_vertex()`: 미방문 정점 중 최소 거리 정점 찾기
+  - `print_path()`: 재귀적으로 최단 경로 출력
+  - `create_sample_graph()`: 테스트용 가중치 그래프 생성
+  - 그래프 관리:
+    - `init_graph()`: 인접 행렬 초기화 (INF로 설정)
+    - `insert_edge()`: 무방향 가중치 간선 추가
+    - `print_graph()`: 인접 행렬 시각화
+  - **단계별 시각화**: 알고리즘 수행 과정을 테이블로 출력
+- **🔥 핵심 개념**:
+  - **최단 경로 문제**: 음이 아닌 가중치에서 최적해 보장
+  - **시간복잡도**: O(V²) - 인접 행렬 사용
+  - **실제 사용**: GPS 네비게이션, 네트워크 라우팅, 게임 AI
+
+---
+
 ## 📝 주요 특징
 
 ### 시간 복잡도 비교
 
-| 자료구조   | 삽입            | 삭제            | 탐색            |
-| ---------- | --------------- | --------------- | --------------- |
-| BST        | O(log n) ~ O(n) | O(log n) ~ O(n) | O(log n) ~ O(n) |
-| AVL Tree   | O(log n)        | O(log n)        | O(log n)        |
-| B-Tree     | O(log n)        | O(log n)        | O(log n)        |
-| Heap       | O(log n)        | O(log n)        | O(n)            |
-| Hash Table | O(1) ~ O(n)     | O(1) ~ O(n)     | O(1) ~ O(n)     |
+| 자료구조/알고리즘  | 삽입            | 삭제            | 탐색            | 특징               |
+| ------------------ | --------------- | --------------- | --------------- | ------------------ |
+| BST                | O(log n) ~ O(n) | O(log n) ~ O(n) | O(log n) ~ O(n) | 불균형 가능        |
+| AVL Tree           | O(log n)        | O(log n)        | O(log n)        | 엄격한 균형        |
+| **Red-Black Tree** | **O(log n)**    | **O(log n)**    | **O(log n)**    | **실용적 균형**    |
+| B-Tree             | O(log n)        | O(log n)        | O(log n)        | 디스크 최적화      |
+| Heap               | O(log n)        | O(log n)        | O(n)            | 우선순위 큐        |
+| Hash Table         | O(1) ~ O(n)     | O(1) ~ O(n)     | O(1) ~ O(n)     | 평균 O(1)          |
+| **Dijkstra**       | -               | -               | -               | **O(V²) 최단경로** |
 
 ### 공간 복잡도
 
 - **트리 구조**: O(n)
 - **그래프 (인접 행렬)**: O(V²)
 - **해시 테이블**: O(n)
+- **Red-Black Tree**: O(n) + 색상 정보
+- **Dijkstra**: O(V) - 거리/방문/경로 배열
 
----
+### 🎯 각 자료구조의 적용 분야
 
-## 📚 학습 목적
-
-이 구현들은 자료구조와 알고리즘의 기본 개념을 이해하고 실습하기 위한 교육용 코드입니다. 각 자료구조의 특성과 사용 사례를 학습할 수 있습니다.
+- **BST/AVL**: 동적 정렬, 범위 검색
+- **🔥 Red-Black Tree**: **STL map/set, Java TreeMap** (실제 라이브러리 구현)
+- **B-Tree**: 데이터베이스 인덱싱, 파일 시스템
+- **Heap**: 우선순위 큐, 힙 정렬
+- **Graph**: 네트워크 경로, 소셜 네트워크 분석
+- **🔥 Dijkstra**: **GPS 네비게이션, 네트워크 라우팅**
+- **Hash Table**: 캐시, 데이터베이스 해싱
